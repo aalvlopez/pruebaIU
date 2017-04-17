@@ -12,3 +12,29 @@ if (isset($_GET["controller"])) {
 }
 
 include_once "Controller/" . $controller . "_Controller.php";
+
+$action = "SHOWALL";
+
+if (isset($_GET["action"])) {
+    $action = strtoupper($_GET["action"]);
+    if (!function_exists($action)) {
+        $action = "SHOWALL";
+    }
+}
+
+switch ($action) {
+    case "SHOWALL":
+        showAll();
+        break;
+    case "SHOWCURRENT":
+        $id = null;
+        if (isset($_GET["id"]))
+            $id = $_GET["id"];
+        showCurrent($id);
+        break;
+    case "ADD":
+        add();
+        break;
+    default:
+        echo "FALTA ACCION";
+}

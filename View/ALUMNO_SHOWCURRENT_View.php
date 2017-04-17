@@ -32,7 +32,9 @@ class ALUMNO_SHOWCURRENT_View
         $this->values_list = $values_list;
     }
 
-
-
+    public function render()
+    {
+        var_dump($this->getValuesList());
+    }
 
 }

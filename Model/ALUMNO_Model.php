@@ -63,9 +63,32 @@ class ALUMNO_Model
         $intval = intval($es_becario);
         $stmt->bindParam(":es_becario", $intval);
 
-        if(!$stmt->execute()){
-            error_log("ERROR");
+        if (!$stmt->execute()) {
+            throw new PDOException("ERROR DB");
         }
+    }
 
+    public function updateAlumno($dni, $nombre, $apellidos, $fecha_nacimiento,
+                                 $telefono, $direccion, $es_becario)
+    {
+        $sql = "UPDATE alumno SET nombre=:nombre,apellidos=:apellidos,
+fecha_nacimiento=:fecha_nacimiento,telefono=:telefono,direccion=:direccion,
+es_becario=:es_becario WHERE dni=:dni";
+
+        $date = $fecha_nacimiento->format("Y-m-d");
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":dni", $dni);
+        $stmt->bindParam(":nombre", $nombre);
+        $stmt->bindParam(":apellidos", $apellidos);
+        $stmt->bindParam(":fecha_nacimiento", $date);
+        $stmt->bindParam(":telefono", $telefono);
+        $stmt->bindParam(":direccion", $direccion);
+        $intval = intval($es_becario);
+        $stmt->bindParam(":es_becario", $intval);
+
+        if (!$stmt->execute()) {
+            throw new PDOException("ERROR DB");
+        }
     }
 }
